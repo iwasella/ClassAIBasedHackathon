@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f3ee">
+    <title>Lettercount — Word Game Scorekeeper</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.mjs"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Lettercount home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>lettercount</span>
+        </a>
+        <span class="topbar-note">THE WORD GAME SCOREKEEPER</span>
+      </header>
+
+      <section id="setup-screen" class="setup-screen">
+        <div class="setup-intro">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> MADE FOR GAME NIGHT</p>
+          <h1>Make every<br><span>letter count.</span></h1>
+          <p class="intro-copy">A little less math. A lot more wordplay. Add your players and let the points take care of themselves.</p>
+          <div class="tile-still-life" aria-hidden="true">
+            <div class="letter-tile tile-c"><b>C</b><small>3</small></div>
+            <div class="letter-tile tile-a"><b>A</b><small>1</small></div>
+            <div class="letter-tile tile-t"><b>T</b><small>1</small></div>
+            <div class="still-life-note">a good place<br>to start <span>↗</span></div>
+          </div>
+        </div>
+
+        <div class="setup-card">
+          <div class="card-heading-row">
+            <div>
+              <p class="eyebrow">NEW GAME</p>
+              <h2>Who's playing?</h2>
+            </div>
+            <span class="player-count" id="setup-count">02 / 04</span>
+          </div>
+          <p class="card-copy">Add 2–4 players to get started.</p>
+          <form id="setup-form">
+            <div id="player-inputs" class="player-inputs"></div>
+            <button type="button" class="add-player-button" id="add-player-button">
+              <span aria-hidden="true">＋</span> Add another player
+            </button>
+            <p id="setup-error" class="form-error" aria-live="polite"></p>
+            <button type="submit" class="primary-button start-button">
+              Start a new game <span aria-hidden="true">↗</span>
+            </button>
+          </form>
+          <p class="setup-footnote"><span aria-hidden="true">✳</span> Scores stay on this device while the page is open.</p>
+        </div>
+      </section>
+
+      <section id="game-screen" class="game-screen" hidden>
+        <div class="game-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-dot"></span> GAME IN PROGRESS</p>
+            <h1>Keep the words<br><span>coming.</span></h1>
+          </div>
+          <button class="quiet-button" type="button" id="new-game-button">↺ <span>New game</span></button>
+        </div>
+
+        <div class="game-layout">
+          <section class="score-panel" aria-labelledby="scoreboard-title">
+            <div class="panel-topline">
+              <div>
+                <p class="eyebrow">THE TABLE</p>
+                <h2 id="scoreboard-title">Scoreboard</h2>
+              </div>
+              <span id="round-count" class="round-count">ROUND 01</span>
+            </div>
+            <div id="score-list" class="score-list"></div>
+            <div class="history-section">
+              <div class="history-heading">
+                <p class="eyebrow">PLAY BY PLAY</p>
+                <button type="button" class="undo-button" id="undo-button" disabled>↶ Undo last</button>
+              </div>
+              <div id="turn-history" class="turn-history"></div>
+            </div>
+          </section>
+
+          <section class="entry-panel" aria-labelledby="entry-title">
+            <div class="entry-panel-heading">
+              <div>
+                <p class="eyebrow">YOUR TURN</p>
+                <h2 id="entry-title">Add a word</h2>
+              </div>
+              <span class="turn-indicator"><span></span> <span id="current-player-label">PLAYER</span></span>
+            </div>
+
+            <form id="turn-form">
+              <label class="field-label" for="word-input">Word played</label>
+              <input id="word-input" class="word-input" name="word" type="text" maxlength="15" autocomplete="off" placeholder="e.g. QUIZ" required>
+              <div class="tile-settings-heading">
+                <span class="field-label">Your tiles</span>
+                <span id="tile-count" class="tile-count">0 TILES</span>
+              </div>
+              <div id="tile-settings" class="tile-settings" aria-live="polite">
+                <p class="tile-prompt">Type a word above to set tile values.</p>
+              </div>
+
+              <div class="bonus-row">
+                <label class="select-field" for="word-multiplier">
+                  <span class="field-label">Word bonus</span>
+                  <select id="word-multiplier" name="wordMultiplier">
+                    <option value="1">No bonus</option>
+                    <option value="2">Double word ×2</option>
+                    <option value="3">Triple word ×3</option>
+                  </select>
+                </label>
+                <label class="bingo-toggle" for="bingo-checkbox">
+                  <input id="bingo-checkbox" type="checkbox" disabled>
+                  <span class="custom-check" aria-hidden="true"></span>
+                  <span><b>Seven tiles</b><small>+50 bonus</small></span>
+                </label>
+              </div>
+
+              <div id="score-preview" class="score-preview" aria-live="polite">
+                <div class="preview-breakdown"><span>Score preview</span><span>—</span></div>
+                <div class="preview-total"><span>Turn total</span><strong>0</strong></div>
+              </div>
+              <p id="turn-error" class="form-error" aria-live="polite"></p>
+              <button type="submit" class="primary-button submit-button" id="submit-turn-button" disabled>
+                Add score <span aria-hidden="true">↗</span>
+              </button>
+            </form>
+            <p class="entry-note">Letter premiums apply to new tiles only. Check the board, then mark your bonuses here.</p>
+          </section>
+        </div>
+        <footer class="game-footer"><span>lettercount <b>·</b> KEEP YOUR EYES ON THE WORDS</span><span>GOOD LUCK OUT THERE <b>✳</b></span></footer>
+      </section>
+    </main>
+  </body>
+</html>
